@@ -1,5 +1,6 @@
 # generate a csv file recording retention with date identified at day level
 # the analysis is performed at week level
+# input file is 'pol_aca_shock_id_and_date.csv'
 
 import csv
 from datetime import date, datetime, timedelta

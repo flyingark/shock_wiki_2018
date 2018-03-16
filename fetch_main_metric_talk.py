@@ -1,5 +1,6 @@
 # generate a csv file recording an article's number of revision,
 # number of editor, Gini, conflict
+# input file is 'pol_aca_shock_id_and_date.csv'
 from __future__ import division
 import csv
 from datetime import date, datetime, timedelta

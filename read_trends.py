@@ -1,4 +1,6 @@
 # generate csv file recording trends of each article in each month or each day
+# True: process the monthly data
+# False: process the daily data
 
 import csv
 import json

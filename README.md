@@ -6,3 +6,6 @@ This project identifies and evaluates the impact of shock on the collaborative d
   1. Politican
   2. Academic scholars
   3. Random set from WikiProject Biography
+
+## Identify Shock
+The raw data of shock is from Ruihan's code. We first get the monthly level trends and process it with `read_trends.py`.

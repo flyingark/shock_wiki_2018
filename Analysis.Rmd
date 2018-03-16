@@ -1,0 +1,387 @@
+---
+title: "matching"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(gridExtra)
+library(MatchIt)
+source("/Users/arkzhang/Documents/customized_functions/R/plot_mean_errorbar.R")
+setwd("/Users/arkzhang/Documents/research/shock_wiki_2018/data/")
+```
+
+```{r}
+df_full_metric <- merge(
+  x = read.csv("/Users/arkzhang/Documents/research/shock_wiki_2018/data/treated_main_metric.csv") %>%
+    dplyr::select(
+      ArticleId,
+      RelWeek,
+      NumRevNew,
+      NumRev,
+      NumEditorNew,
+      NumEditor,
+      Gini,
+      NumRevertedNew,
+      NumRevertedOld,
+      NumRevertingNew,
+      NumRevertingOld,
+      NumTotalRev
+    ),
+  y = read.csv("/Users/arkzhang/Documents/research/shock_wiki_2018/data/treated_retention.csv") %>%
+    dplyr::select(
+      ArticleId,
+      RelWeek,
+      NumCumulRevNew,
+      NumCumulRevOld,
+      NumCumulRev,
+      NumCumulEditorNew,
+      NumCumulEditorOld,
+      NumCumulEditor
+    ),
+  by = c("ArticleId", "RelWeek")
+)
+```
+
+```{r}
+df_full_metric %<>% mutate(
+  NumRevOld = NumRev - NumRevNew,
+  FracRevertedNew = ifelse(NumRevNew == 0, NA, NumRevertedNew / NumRevNew),
+  IsRevertedNew = ifelse(is.na(FracRevertedNew), NA, ifelse(FracRevertedNew > 0, 1, 0)),
+  AvgRevertedNew = ifelse(NumRevNew == 0, NA, NumRevertedNew / NumEditorNew),
+  FracRevertedOld = ifelse(NumRevOld == 0, NA, NumRevertedOld / NumRevOld),
+  IsRevertedOld = ifelse(is.na(FracRevertedOld), NA, ifelse(FracRevertedOld > 0, 1, 0)),
+  FracRevertingNew = ifelse(NumRevNew == 0, NA, NumRevertingNew / NumRevNew),
+  FracRevertingOld = ifelse(NumRevOld == 0, NA, NumRevertingOld / NumRevOld),
+  NumEditorOld = NumEditor - NumEditorNew,
+  FracCumulRevNew = ifelse(NumCumulRev == 0, NA, NumCumulRevNew / NumCumulRev),
+  FracCumulRevOld = ifelse(NumCumulRev == 0, NA, NumCumulRevOld / NumCumulRev),
+  FracReverted = ifelse(NumRev == 0, NA, (NumRevertedNew + NumRevertedOld) / NumRev),
+  FracReverting = ifelse(NumRev == 0, NA, (NumRevertingNew + NumRevertingOld) / NumRev),
+  FracRevNew = ifelse(NumRev == 0, NA, NumRevNew / NumRev),
+  log_NumTotalRev = log(1 + NumTotalRev),
+  FracNewEditor = ifelse(NumEditor == 0, NA, NumEditorNew / NumEditor),
+  total_comment_na_replaced = ifelse(is.na(total_comment), 0, total_comment),
+  editis_per_neweditor_na_replaced = ifelse(NumEditorNew == 0, NA, ifelse(is.na(editis_per_neweditor), 0, editis_per_neweditor)),
+  log_talk_main_ratio = ifelse(NumRev == 0, NA, log(1+total_comment_na_replaced) / log(1+NumRev))
+)
+```
+
+```{r}
+df_talk <- rbind(
+  read.csv("wiki_talk_stats_academics_final.csv"),
+  read.csv("wiki_talk_stats_politicians_final.csv"),
+  read.csv("wiki_talk_stats_sample_final.csv")
+)
+df_full_metric <- merge(x = df_full_metric, y = df_talk, by = c("ArticleId", "RelWeek"), all.x = T)
+```
+
+```{r}
+# plot number of revisions
+plot_numrev <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    filter(!is.na(IsRevertedNew)) %>%
+    dplyr::select(RelWeek, NumRev, Type))
+plot_numrev$coordinates$limits$y <- c(0, 20)
+plot_numrev$labels$x <- "Week relative to shock"
+plot_numrev$labels$y <- "Number of revisions"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/numrev.pdf",
+       plot = plot_numrev,
+       width = 8, height = 8, units = "in", device = "pdf")
+
+# plot number of editors
+plot_numeditor <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    filter(!is.na(IsRevertedNew)) %>%
+    dplyr::select(RelWeek, NumEditor, Type))
+plot_numeditor$coordinates$limits$y <- c(0, 10)
+plot_numeditor$labels$x <- "Week Relative to Shock"
+plot_numeditor$labels$y <- "Number of editors"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/numeditor.pdf",
+       plot = plot_numeditor,
+       width = 8, height = 8, units = "in", device = "pdf")
+
+# plot number of editors
+plot_fracneweditor <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    filter(!is.na(IsRevertedNew)) %>%
+    dplyr::select(RelWeek, FracNewEditor, Type))
+plot_fracneweditor$coordinates$limits$y <- c(0.75, 1)
+plot_fracneweditor$labels$x <- "Week Relative to Shock"
+plot_fracneweditor$labels$y <- "Number of editors"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/numeditor.pdf",
+       plot = plot_fracneweditor,
+       width = 8, height = 8, units = "in", device = "pdf")
+```
+
+```{r}
+# plot fraction of new editors
+plot_fracneweditor <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, FracNewEditor, Type))
+plot_fracneweditor$coordinates$limits$y <- c(0.6, 1)
+plot_fracneweditor$labels$x <- "Week relative to shock"
+plot_fracneweditor$labels$y <- "Fraction of Newcomers"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/fracneweditor.pdf",
+       plot = plot_fracneweditor,
+       width = 8, height = 8, units = "in", device = "pdf")
+```
+
+```{r}
+# plot gini
+plot_gini <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, Gini, Type))
+plot_gini$coordinates$limits$y <- c(0.7, 0.9)
+plot_gini$labels$x <- "Week Relative to Shock"
+plot_gini$labels$y <- "Gini"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/gini.pdf",
+       plot = plot_gini,
+       width = 8, height = 8, units = "in", device = "pdf")
+```
+
+```{r}
+# plot fraction of reverts
+plot_revertednew <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, FracRevertedNew, Type))
+plot_revertednew$coordinates$limits$y <- c(0,0.25)
+plot_revertednew$labels$x <- "Week Relative to Shock"
+plot_revertednew$labels$y <- "Reverted Revisions by New"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/revertednew.pdf",
+       plot = plot_revertednew,
+       width = 8, height = 8, units = "in", device = "pdf")
+
+plot_isrevertednew <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    filter(!is.na(IsRevertedNew)) %>%
+    dplyr::select(RelWeek, IsRevertedNew, Type))
+plot_isrevertednew$coordinates$limits$y <- c(0.1,0.6)
+plot_isrevertednew$labels$x <- "Week Relative to Shock"
+plot_isrevertednew$labels$y <- "Reverted Revisions by New"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/isrevertednew.pdf",
+       plot = plot_isrevertednew,
+       width = 8, height = 8, units = "in", device = "pdf")
+
+plot_avgrevertednew <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, AvgRevertedNew, Type))
+plot_avgrevertednew$coordinates$limits$y <- c(0.1,0.4)
+plot_avgrevertednew$labels$x <- "Week Relative to Shock"
+plot_avgrevertednew$labels$y <- "Reverted Revisions by New"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/avgrevertednew.pdf",
+       plot = plot_avgrevertednew,
+       width = 8, height = 8, units = "in", device = "pdf")
+
+plot_revertedold <- plot_mean_errorbar(
+  df_full_metric %>% filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, FracRevertedOld, Type))
+plot_revertedold$coordinates$limits$y <- c(0,0.25)
+plot_revertedold$labels$x <- "Week Relative to Shock"
+plot_revertedold$labels$y <- "Reverted Revisions by Incumbents"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/revertedold.pdf",
+       plot = plot_revertedold,
+       width = 8, height = 8, units = "in", device = "pdf")
+
+plot_revertingnew <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, FracRevertingNew, Type))
+plot_revertingnew$coordinates$limits$y <- c(0,0.4)
+plot_revertingnew$labels$x <- "Week Relative to Shock"
+plot_revertingnew$labels$y <- "Reverting Revisions by New"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/revertingnew.pdf",
+       plot = plot_revertingnew,
+       width = 8, height = 8, units = "in", device = "pdf")
+
+plot_revertingold <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, FracRevertingOld, Type))
+plot_revertingold$coordinates$limits$y <- c(0,0.4)
+plot_revertingold$labels$x <- "Week Relative to Shock"
+plot_revertingold$labels$y <- "Reverting Revisions by Incumbents"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/revertingold.pdf",
+       plot = plot_revertingold,
+       width = 8, height = 8, units = "in", device = "pdf")
+```
+
+```{r}
+# plot cumulative retention
+plot_cumulrevnew <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, FracCumulRevNew, Type))
+plot_cumulrevnew$coordinates$limits$y <- c(0,0.1)
+plot_cumulrevnew$labels$x <- "Week Relative to Shock"
+plot_cumulrevnew$labels$y <- "Retention New"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/cumulrevnew.pdf",
+       plot = plot_cumulrevnew,
+       width = 8, height = 8, units = "in", device = "pdf")
+
+plot_cumulrevold <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, FracCumulRevOld, Type))
+plot_cumulrevold$coordinates$limits$y <- c(0,0.1)
+plot_cumulrevold$labels$x <- "Week Relative to Shock"
+plot_cumulrevold$labels$y <- "Retention Incumbents"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/cumulrevold.pdf",
+       plot = plot_cumulrevold,
+       width = 8, height = 8, units = "in", device = "pdf")
+```
+
+```{r}
+# plot comment on talk page
+plot_avgcomment <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, editis_per_neweditor, Type))
+plot_avgcomment$coordinates$limits$y <- c(0, 0.2)
+plot_avgcomment$labels$x <- "Week Relative to Shock"
+plot_avgcomment$labels$y <- "Gini"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/avgcomment.pdf",
+       plot = plot_avgcomment,
+       width = 8, height = 8, units = "in", device = "pdf")
+```
+
+```{r}
+# plot aver on talk page
+plot_comment <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, total_comment, Type))
+plot_comment$coordinates$limits$y <- c(0, 10)
+plot_comment$labels$x <- "Week Relative to Shock"
+plot_comment$labels$y <- "Gini"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/comment.pdf",
+       plot = plot_comment,
+       width = 8, height = 8, units = "in", device = "pdf")
+```
+
+```{r}
+# plot talk_main_ratio
+plot_talk_main_ratio <- plot_mean_errorbar(
+  df_full_metric %>%
+    filter(RelWeek >= -8 & RelWeek <= 7) %>%
+    dplyr::select(RelWeek, log_talk_main_ratio, Type))
+plot_talk_main_ratio$coordinates$limits$y <- c(0, 0.15)
+plot_talk_main_ratio$labels$x <- "Week Relative to Shock"
+plot_talk_main_ratio$labels$y <- "Gini"
+ggsave("/Users/arkzhang/Documents/research/shock_wiki_2018/figure/talk_main_ratio.pdf",
+       plot = plot_talk_main_ratio,
+       width = 8, height = 8, units = "in", device = "pdf")
+```
+
+```{r}
+b_gini_pvalue <- matrix(nrow = 5, ncol = 3)
+a_gini_pvalue <- matrix(nrow = 5, ncol = 3)
+a_gini <- matrix(nrow = 5, ncol = 3)
+ide_gini <- matrix(nrow = 5, ncol = 3)
+ide_gini_pvalue <- matrix(nrow = 5, ncol = 3)
+
+b_reverted_new_pvalue <- matrix(nrow = 5, ncol = 3)
+ide_reverted_new <- matrix(nrow = 5, ncol = 3)
+ide_reverted_new_pvalue <- matrix(nrow = 5, ncol = 3)
+
+b_total_comment_pvalue <- matrix(nrow = 5, ncol = 3)
+ide_total_comment <- matrix(nrow = 5, ncol = 3)
+ide_total_comment_pvalue <- matrix(nrow = 5, ncol = 3)
+
+b_editis_per_neweditor_pvalue <- matrix(nrow = 5, ncol = 3)
+ide_editis_per_neweditor <- matrix(nrow = 5, ncol = 3)
+ide_editis_per_neweditor_pvalue <- matrix(nrow = 5, ncol = 3)
+
+de <- matrix(nrow = 5, ncol = 3)
+de_pvalue <- matrix(nrow = 5, ncol = 3)
+
+total <- matrix(nrow = 5, ncol = 3)
+
+nobs <- matrix(nrow = 5, ncol = 3)
+
+model_0 <- '
+    # outcome model
+    FracCumulRevNew ~ b0 * shock + b_gini * Gini + b_reverted_new * IsRevertedNew +
+                      b_total_comment * total_comment_na_replaced + b_editis_per_neweditor * editis_per_neweditor_na_replaced +
+                      b_size * log_NumTotalRev + b_reverts * FracReverted +
+                      b_fracnewcomer * FracNewEditor
+    
+    # mediator model
+    Gini ~ a_gini * shock
+    IsRevertedNew ~ a_reverted_new * shock
+    total_comment_na_replaced ~ a_total_comment * shock
+    editis_per_neweditor_na_replaced ~ a_editis_per_neweditor * shock
+
+    # indirect effects
+    ide_gini := a_gini * b_gini
+    ide_reverted_new := a_reverted_new * b_reverted_new
+    ide_total_comment := a_total_comment * b_total_comment
+    ide_editis_per_neweditor := a_editis_per_neweditor * b_editis_per_neweditor
+
+
+    # direct effect
+    de := b0
+    
+    # total effect
+    total := b0 + (a_gini * b_gini) + (a_reverted_new * b_reverted_new) +
+              (a_total_comment * b_total_comment) + (a_editis_per_neweditor * b_editis_per_neweditor)
+    '
+
+for (ss in -2:0) {
+  for (e in 1:5) {
+    
+    e = 2
+    ss = -2
+    
+    StartWeek = -5
+    EndWeek = e
+    StartTreatWeek = ss
+    EndTreatWeek = e
+    
+    df_full_metric %<>% mutate(
+      shock = ifelse(RelWeek >= StartTreatWeek & RelWeek <= EndTreatWeek, 1, 0))
+    
+    fit <- sem(model_0, 
+               data = df_full_metric %>% filter(RelWeek >= StartWeek & RelWeek <= EndWeek),
+               link = 'probit',
+               bootstrap = 10000)
+    summary(fit)
+    boot.fit <- parameterEstimates(fit, boot.ci.type = 'bca.simple')
+    
+    b_gini_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "b_gini",c("pvalue")]
+    a_gini[e,ss+3] <- boot.fit[boot.fit$label == "a_gini",c("est")]
+    a_gini_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "a_gini",c("pvalue")]
+    ide_gini[e,ss+3] <- boot.fit[boot.fit$label == "ide_gini",c("est")]
+    ide_gini_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "ide_gini",c("pvalue")]
+    
+    b_reverted_new_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "b_reverted_new",c("pvalue")]
+    ide_reverted_new[e,ss+3] <- boot.fit[boot.fit$label == "ide_reverted_new",c("est")]
+    ide_reverted_new_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "ide_reverted_new",c("pvalue")]
+    
+    b_total_comment_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "b_total_comment",c("pvalue")]
+    ide_total_comment[e,ss+3] <- boot.fit[boot.fit$label == "ide_total_comment",c("est")]
+    ide_total_comment_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "ide_total_comment",c("pvalue")]
+    
+    b_editis_per_neweditor_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "b_editis_per_neweditor",c("pvalue")]
+    ide_editis_per_neweditor[e,ss+3] <- boot.fit[boot.fit$label == "ide_editis_per_neweditor",c("est")]
+    ide_editis_per_neweditor_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "ide_editis_per_neweditor",c("pvalue")]
+    
+    de[e,ss+3] <- boot.fit[boot.fit$label == "de",c("est")]
+    de_pvalue[e,ss+3] <- boot.fit[boot.fit$label == "de",c("pvalue")]
+    
+    total[e,ss+3] <- boot.fit[boot.fit$label == "total",c("est")]
+    
+    nobs[e,ss+3] <- nobs(fit)
+  }
+}
+```

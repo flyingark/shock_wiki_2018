@@ -1,4 +1,5 @@
 # This code fetch the gini coefficient for articles in 1-8 weeks before the shock
+# input file is 'pol_aca_shock_id_and_date.csv'
 
 from __future__ import division
 import csv

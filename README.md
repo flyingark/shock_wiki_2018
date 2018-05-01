@@ -23,8 +23,14 @@ The raw data of shock is from Ruihan's code. To identify the shock,
 * list of bot accounts: `/data/bot_list.csv`
 
 ## Fetch measures
-* Fetch activity (number of revisions, editors, reverted, reverting) by all editors and separately by new and incumbent editors), the set of new editors, the set of incumbent editors, the set of new editors who are new to Wikipedia as well with `arkzhang@epico.si.umich.edu:~/shock_wiki_2018/code/fetch_main_metric.py`. Generates `/data/main_metric.csv` and `/data/main_metric_sort_by_date.csv` 
-The measures include activity, gini, cumulative retention. They are separately generated from `fetch_main_metric`, `fetch_experience`, `fetch_retention_cumulative`. Each piece will generate a csv file. Each line in that file corresponds to a snapshot of an article.
+* Run script `arkzhang@epico.si.umich.edu:~/shock_wiki_2018/code/fetch_main_metric.py`. This generates `/data/main_metric.csv` and `/data/main_metric_sort_by_date.csv`. These two files contain essentially the same information. The measures includes:
+  1. activity (number of revisions, editors, reverted, reverting)
+  2. gini
+  3. the set of new editors, incumbent editors, incumbent editors who join before the shock, incumbent editors who join after the shock, editors who are new to wikipedia
+  4. size of article
+* Run script `arkzhang@epico.si.umich.edu:~/shock_wiki_2018/code/fetch_retention.py`. This generates `/data/retention.csv`.
+* Run script `arkzhang@epico.si.umich.edu:~/shock_wiki_2018/code/get_all_wiki_rev_currentweek.py`. This generates `/data/main_metric_sort_by_date_rev_currentweek.csv` that records the spillover over all wikipedia
+* Run script `arkzhang@epico.si.umich.edu:~/shock_wiki_2018/code/get_all_wiki_retention.py`. This generates `/data/all_treated_allwikireten_currentweek.csv`that records retention over all wikipedia, but without normalization. Run script `arkzhang@epico.si.umich.edu:~/shock_wiki_2018/code/get_spillover_nonzero.py`. This generates `/data/main_metric_sort_by_date_spillover_nonzero.csv` that records spillover normalized by maximum number of revisions over an editor's lifetime.
 
 ## Analysis
 Run `Analysis.Rmd`.

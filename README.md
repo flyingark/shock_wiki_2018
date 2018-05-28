@@ -33,6 +33,9 @@ Follow the steps below to generate the measures to be analyzed.
     | ---------- |---------- |
     | `ArticleId` | id of article |
     | `RelWeek` | week relative to the time of shock |
+    | `StartDate`, `EndDate` | start and end date of the corresponding week |
+    | `RetentionEndDate` | end date of the retention period |
+    | `NumRevNew` | number of revisions by new editors
 
 
 * Get the set of new editors, incumbent editors, incumbent editors who join before the shock, incumbent editors who join after the shock, editors who are new to Wikipedia

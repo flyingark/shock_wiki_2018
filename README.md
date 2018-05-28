@@ -24,11 +24,14 @@ The raw data of shock is from Ruihan's code. To identify the shock,
 
 ## Fetch measures
 Follow the steps below to generate the measures to be analyzed.
-* Get main measures including activity, gini, etc.
+* Level of activity, gini and reverts
   * code `/code/fetch_main_measure.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`
   * output file: `/data/all_treated_main_metric.csv`. fields: `ArticleId`, `RelWeek`, `StartDate`, `EndDate`, `RetentionEndDate`,	`NumRevNew`, `NumRevOld`, `NumRev`,	`NumEditorNew`,	`NumEditorOld`,	`NumEditor`, `Gini`, `NumRevertedNew`, `NumRevertedOld`, `NumRevertingNew`, `NumRevertingOld`, `NumTotalRev`.
-
+  |Fieldname|Remark|
+  |----------|----------|
+  |`ArticleId`|id of article|
+  |`RelWeek`|week relative to the time of shock|
 * Get the set of new editors, incumbent editors, incumbent editors who join before the shock, incumbent editors who join after the shock, editors who are new to Wikipedia
   * code: `/code/fetch_editorset.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`

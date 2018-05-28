@@ -45,12 +45,12 @@ Follow the steps below to generate the measures to be analyzed.
 * Get the set of new editors, incumbent editors, incumbent editors who join before the shock, incumbent editors who join after the shock, editors who are new to Wikipedia
   * code: `/code/fetch_editorset.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`
-  * output file: `/data/all_treated_editor_set.csv`. fields: `ArticleId`, `RelWeek`, `StartDate`, `EndDate`, `RetentionEndDate`,	`NewEditorSet`, `PreShockEditorSet`, `PostShockEditorSet`,	`NewWikiEditorSet`.
+  * output file: `/data/all_treated_editor_set.csv`.
   
-    | Fieldname   | Remark |
-    | ----------  |---------- |
+    | Fieldname | Remark |
+    | ---------- |---------- |
     | `ArticleId` | id of article |
-    | `RelWeek`   | week relative to the time of shock |
+    | `RelWeek` | week relative to the time of shock |
     | `StartDate`, `EndDate` | start and end date of the corresponding week |
     | `RetentionEndDate` | end date of the retention period |
     | `NewEditorSet` | set containing new editors in the week |
@@ -60,13 +60,27 @@ Follow the steps below to generate the measures to be analyzed.
 * Get retention.
   * code: `/code/fetch_retention.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`
-  * output file: `/data/retention.csv`. fields `ArticleId`, `RelWeek`, `StartDate`, `NumCumulRevNew`, `NumCumulRevOld`, `NumCumulRev`, `NumCumulEditorNew`, `NumCumulEditorOld`, `NumCumulEditor`.
+  * output file: `/data/retention.csv`
+    
+    | Fieldname | Remark |
+    | ---------- |---------- |
+    | `ArticleId` | id of article |
+    | `RelWeek` | week relative to the time of shock |
+    | `NumCumulRevNew`, `NumCumulRevOld`, `NumCumulRev` | number of revisions by new / incumbent / all editors to the focal article in the retention period |
+    | `NumCumulEditorNew`, `NumCumulEditorOld`, `NumCumulEditor` | number of new / incumbent / all editors who remain active in the focal article in the retention period |
 
 * Spillover over all Wikipedia
   * code: `/code/get_all_wiki_rev_currentweek.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv`, `/data/treated_history.csv` and `/data/all_treated_main_metric_sort_by_date.csv` (**NOT** `/data/all_treated_main_metric.csv`)
-  * output file: `/data/all_treated_allwikirev_currentweek.csv`.
-
+  * output file: `/data/all_treated_allwikirev_currentweek.csv`. For  includes four summary statistics for various measures: sum, mean, median and mean of log-transformation. We use _ to denote these summary statistics.
+  
+    | Fieldname | Remark |
+    | ---------- |---------- |
+    | `ArticleId` | id of article |
+    | `__EditorAllWiki`, `__OldEditorAllWiki`, `__NewEditorAllWiki` | week relative to the time of shock |
+    | `NumCumulRevNew`, `NumCumulRevOld`, `NumCumulRev` | number of revisions by new / incumbent / all editors to the focal article in the retention period |
+    | `NumCumulEditorNew`, `NumCumulEditorOld`, `NumCumulEditor` | number of new / incumbent / all editors who remain active in the focal article in the retention period |
+  
 * Retention over all Wikipedia
   * code: `/code/get_all_wiki_retention.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv`, `/data/treated_history.csv` and `/data/all_treated_main_metric_sort_by_date.csv` (**NOT** `/data/all_treated_main_metric.csv`)

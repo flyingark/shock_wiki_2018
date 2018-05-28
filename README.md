@@ -84,12 +84,24 @@ Follow the steps below to generate the measures to be analyzed.
     | `__PostShockAllWiki` | number of revisions by old editors who join after shock over the entire Wikipedia |
     | `__NewWikiAllWiki` | number of revisions by new editors who are also new to Wikipedia over the entire Wikipedia |
     
-    _Note: For each measure, the output file contains four summary statistics (which is represented by a `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation._
+    _Note: For each measure, the output file contains four summary statistics (represented by `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation._
     
 * Retention over all Wikipedia
   * code: `/code/get_all_wiki_retention.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv`, `/data/treated_history.csv` and `/data/all_treated_main_metric_sort_by_date.csv` (**NOT** `/data/all_treated_main_metric.csv`)
   * output file: `/data/all_treated_allwikireten_currentweek.csv`
+
+    | Fieldname | Remark |
+    | ---------- |---------- |
+    | `ArticleId` | id of article |
+    | `__OldEditorRetenAllWiki` | number of revisions by old editors over the entire Wikipedia during the retention period |
+    | `__NewEditorRetenAllWiki` | number of revisions by new editors over the entire Wikipedia during the retention period|
+    | `__PreShockRetenAllWiki` | number of revisions by old editors who join before shock over the entire Wikipedia during the retention period |
+    | `__PostShockRetenAllWiki` | number of revisions by old editors who join after shock over the entire Wikipedia during the retention period|
+    | `__NewWikiRetenAllWiki` | number of revisions by new editors who are also new to Wikipedia over the entire Wikipedia during the retention period |
+    | `__NewNonWikiRetenAllWiki` | number of revisions by new editors who are not new to Wikipedia over the entire Wikipedia during the retention period |
+
+    _Note: For each measure, the output file contains four summary statistics (represented by `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation._
 
 * Non-zero spillover over all Wikipedia
   * code: `/code/get_spillover_nonzero.py`

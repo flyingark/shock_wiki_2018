@@ -23,6 +23,7 @@ The raw data of shock is from Ruihan's code. To identify the shock,
 * list of bot accounts: `/data/bot_list.csv`
 
 ## Fetch measures
+Follow the steps below to generate the measures to be analyzed.
 * Get main measures including activity, gini, etc.
   * code `/code/fetch_main_measure.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`

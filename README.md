@@ -77,10 +77,15 @@ Follow the steps below to generate the measures to be analyzed.
     | Fieldname | Remark |
     | ---------- |---------- |
     | `ArticleId` | id of article |
-    | `__EditorAllWiki`, `__OldEditorAllWiki`, `__NewEditorAllWiki` | week relative to the time of shock |
-    | `NumCumulRevNew`, `NumCumulRevOld`, `NumCumulRev` | number of revisions by new / incumbent / all editors to the focal article in the retention period |
-    | `NumCumulEditorNew`, `NumCumulEditorOld`, `NumCumulEditor` | number of new / incumbent / all editors who remain active in the focal article in the retention period |
-  
+    | `__EditorAllWiki` | number of revisions by all editors over the entire Wikipedia |
+    | `__OldEditorAllWiki` | number of revisions by old editors over the entire Wikipedia |
+    | `__NewEditorAllWiki` | number of revisions by new editors over the entire Wikipedia |
+    | `__PreShockAllWiki` | number of revisions by old editors who join before shock over the entire Wikipedia |
+    | `__PostShockAllWiki` | number of revisions by old editors who join after shock over the entire Wikipedia |
+    | `__NewWikiAllWiki` | number of revisions by new editors who are also new to Wikipedia over the entire Wikipedia |
+    
+    Note: For each measure, the output file contains four summary statistics (which is represented by a `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation.
+    
 * Retention over all Wikipedia
   * code: `/code/get_all_wiki_retention.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv`, `/data/treated_history.csv` and `/data/all_treated_main_metric_sort_by_date.csv` (**NOT** `/data/all_treated_main_metric.csv`)

@@ -84,7 +84,7 @@ Follow the steps below to generate the measures to be analyzed.
     | `__PostShockAllWiki` | number of revisions by old editors who join after shock over the entire Wikipedia |
     | `__NewWikiAllWiki` | number of revisions by new editors who are also new to Wikipedia over the entire Wikipedia |
     
-    Note: For each measure, the output file contains four summary statistics (which is represented by a `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation.
+    _Note: For each measure, the output file contains four summary statistics (which is represented by a `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation._
     
 * Retention over all Wikipedia
   * code: `/code/get_all_wiki_retention.py`

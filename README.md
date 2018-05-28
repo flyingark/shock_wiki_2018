@@ -46,6 +46,16 @@ Follow the steps below to generate the measures to be analyzed.
   * code: `/code/fetch_editorset.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`
   * output file: `/data/all_treated_editor_set.csv`. fields: `ArticleId`, `RelWeek`, `StartDate`, `EndDate`, `RetentionEndDate`,	`NewEditorSet`, `PreShockEditorSet`, `PostShockEditorSet`,	`NewWikiEditorSet`.
+  
+    | Fieldname   | Remark |
+    | ----------  |---------- |
+    | `ArticleId` | id of article |
+    | `RelWeek`   | week relative to the time of shock |
+    | `StartDate`, `EndDate` | start and end date of the corresponding week |
+    | `RetentionEndDate` | end date of the retention period |
+    | `NewEditorSet` | set containing new editors in the week |
+    | `PreShockEditorSet`, `PostShockEditorSet` | set containing incumbent editors who join before / after the shock |
+    | `NewWikiEditorSet` | set containing new editors who are new to Wikipedia as well |
 
 * Get retention.
   * code: `/code/fetch_retention.py`

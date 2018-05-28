@@ -27,12 +27,12 @@ Follow the steps below to generate the measures to be analyzed.
 * Level of activity, gini and reverts
   * code `/code/fetch_main_measure.py`
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`
-  * output file: `/data/all_treated_main_metric.csv`. fields: `ArticleId`, `RelWeek`, `StartDate`, `EndDate`, `RetentionEndDate`,	`NumRevNew`, `NumRevOld`, `NumRev`,	`NumEditorNew`,	`NumEditorOld`,	`NumEditor`, `Gini`, `NumRevertedNew`, `NumRevertedOld`, `NumRevertingNew`, `NumRevertingOld`, `NumTotalRev`.
+  * output file: `/data/all_treated_main_metric.csv`
 
-    | Fieldname | Remark |
-    | ---------- |---------- |
+    | Fieldname   | Remark |
+    | ----------  |---------- |
     | `ArticleId` | id of article |
-    | `RelWeek` | week relative to the time of shock |
+    | `RelWeek`   | week relative to the time of shock |
     | `StartDate`, `EndDate` | start and end date of the corresponding week |
     | `RetentionEndDate` | end date of the retention period |
     | `NumRevNew`, `NumRevOld`, `NumRev` | number of revisions by new / incumbent / all editors |

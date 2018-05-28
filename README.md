@@ -29,10 +29,10 @@ Follow the steps below to generate the measures to be analyzed.
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`
   * output file: `/data/all_treated_main_metric.csv`. fields: `ArticleId`, `RelWeek`, `StartDate`, `EndDate`, `RetentionEndDate`,	`NumRevNew`, `NumRevOld`, `NumRev`,	`NumEditorNew`,	`NumEditorOld`,	`NumEditor`, `Gini`, `NumRevertedNew`, `NumRevertedOld`, `NumRevertingNew`, `NumRevertingOld`, `NumTotalRev`.
 
-| Fieldname | Remark |
-| ---------- |---------- |
-| `ArticleId` | id of article |
-| `RelWeek` | week relative to the time of shock |
+  | Fieldname | Remark |
+  | ---------- |---------- |
+  | `ArticleId` | id of article |
+  | `RelWeek` | week relative to the time of shock |
 
 
 * Get the set of new editors, incumbent editors, incumbent editors who join before the shock, incumbent editors who join after the shock, editors who are new to Wikipedia

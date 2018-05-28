@@ -77,6 +77,7 @@ Follow the steps below to generate the measures to be analyzed.
     | Fieldname | Remark |
     | ---------- |---------- |
     | `ArticleId` | id of article |
+    | `RelWeek` | week relative to the time of shock |
     | `__EditorAllWiki` | number of revisions by all editors over the entire Wikipedia |
     | `__OldEditorAllWiki` | number of revisions by old editors over the entire Wikipedia |
     | `__NewEditorAllWiki` | number of revisions by new editors over the entire Wikipedia |
@@ -94,6 +95,7 @@ Follow the steps below to generate the measures to be analyzed.
     | Fieldname | Remark |
     | ---------- |---------- |
     | `ArticleId` | id of article |
+    | `RelWeek` | week relative to the time of shock |
     | `__OldEditorRetenAllWiki` | number of revisions by old editors over the entire Wikipedia during the retention period |
     | `__NewEditorRetenAllWiki` | number of revisions by new editors over the entire Wikipedia during the retention period|
     | `__PreShockRetenAllWiki` | number of revisions by old editors who join before shock over the entire Wikipedia during the retention period |
@@ -107,6 +109,16 @@ Follow the steps below to generate the measures to be analyzed.
   * code: `/code/get_spillover_nonzero.py`
   * require `/data/main_metric_sort_by_date.csv`, `/data/history_all_wiki_sort_by_date.csv` and `/data/bot_list.csv`
   * output file: `/data/main_metric_sort_by_date_spillover_nonzero.csv`
+  
+    | Fieldname | Remark |
+    | ---------- |---------- |
+    | `ArticleId` | id of article |
+    | `RelWeek` | week relative to the time of shock |
+    | `MeanSpillover` | mean of spillover over all Wikipedia |
+    | `LogMeanSpillover` | mean of log-transformation spillover over all Wikipedia |
+    
+    _Note: For each editor, the spillover measure in a week is the ratio of the number of revisions over all Wikipedia to the average number of revisions (excluding weeks with no revisions)._
+  
 
 ## Analysis
 Run `Analysis.Rmd`.

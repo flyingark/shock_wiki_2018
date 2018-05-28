@@ -35,8 +35,12 @@ Follow the steps below to generate the measures to be analyzed.
     | `RelWeek` | week relative to the time of shock |
     | `StartDate`, `EndDate` | start and end date of the corresponding week |
     | `RetentionEndDate` | end date of the retention period |
-    | `NumRevNew` | number of revisions by new editors
-
+    | `NumRevNew`, `NumRevOld`, `NumRev` | number of revisions by new editors / incumbent editors / all editors |
+    | `NumEditorNew`, `NumEditorOld`, `NumEditor` | number of new editors / incumbent editors / all editors |
+    | `Gini` | gini coefficient normalized by theoretical upperbound |
+    | `NumRevertedNew`, `NumRevertedOld` | number of revisions reverted by new editors / incumbent editors |
+    | `NumRevertingNew`, `NumRevertingOld` | number of revertings made by new editors / incumbent editors |
+    | `NumTotalRev` | number of cumulative revisions up to the week |
 
 * Get the set of new editors, incumbent editors, incumbent editors who join before the shock, incumbent editors who join after the shock, editors who are new to Wikipedia
   * code: `/code/fetch_editorset.py`

@@ -40,7 +40,7 @@ The raw data of shock is from Ruihan's code. To identify the shock,
 
 * Spillover over all Wikipedia
   * code: `/code/get_all_wiki_rev_currentweek.py`.
-  * require `/data/all_treated_info.csv`, `/data/bot_list.csv`, `/data/treated_history.csv` and `/data/all_treated_main_metric_sort_by_date.csv` (**NOT `/data/all_treated_main_metric.csv**`).
+  * require `/data/all_treated_info.csv`, `/data/bot_list.csv`, `/data/treated_history.csv` and `/data/all_treated_main_metric_sort_by_date.csv` (**NOT** `/data/all_treated_main_metric.csv`).
 * Run script `arkzhang@epico.si.umich.edu:~/shock_wiki_2018/code/get_all_wiki_rev_currentweek.py`. This generates `/data/main_metric_sort_by_date_rev_currentweek.csv` that records the spillover over all wikipedia
 * Run script `arkzhang@epico.si.umich.edu:~/shock_wiki_2018/code/get_all_wiki_retention.py`. This generates `/data/all_treated_allwikireten_currentweek.csv`that records retention over all wikipedia, but without normalization. Run script `arkzhang@epico.si.umich.edu:~/shock_wiki_2018/code/get_spillover_nonzero.py`. This generates `/data/main_metric_sort_by_date_spillover_nonzero.csv` that records spillover normalized by maximum number of revisions over an editor's lifetime.
 

@@ -21,7 +21,7 @@ The raw data of shock is from Ruihan's code. Ruihan has provided [a fairly detai
 * csv file recording the entire history for focal articles (sorted by article name): `/data/treated_history.csv`
 * csv file recording the revision history of the editors who revised any focal article: `/data/history_all_wikipedia_sort_by_date.csv`
 * csv file recording the article id, shockdate, category (academia, political, sample) of each focal article: `/data/all_treated_info.csv`
-* list of bot accounts: `/data/bot_list.csv`
+* list of bot accounts: `/data/bot_list.csv` (retrieved from (https://github.com/halfak/are-the-bots-really-fighting/blob/master/datasets/crosswiki_category_bot_20170328.tsv).)
 
 ## Fetch measures
 Follow the steps below to generate the measures to be analyzed.

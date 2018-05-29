@@ -26,7 +26,7 @@ The raw data of shock is from Ruihan's code. Ruihan has provided [a fairly detai
 ## Fetch measures
 Follow the steps below to generate the measures to be analyzed.
 * Level of activity, gini and reverts
-  * code `/code/fetch_main_measure.py`
+  * code [fetch_main_measure.py](https://github.com/flyingark/shock_wiki_2018/blob/master/fetch_main_measure.py)
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`
   * output file: `/data/all_treated_main_metric.csv`
 
@@ -44,7 +44,7 @@ Follow the steps below to generate the measures to be analyzed.
     | `NumTotalRev` | number of cumulative revisions up to the week |
 
 * Talk page activity
-  * code `talk_stats_analysis.py`(https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/talk_stats_analysis.py)
+  * code [talk_stats_analysis.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/talk_stats_analysis.py)
   * require `/data/all_treated_main_metric.csv`
   * output file: `/data/wiki_talk_stats_XX_final.csv`. _Note: The talk page measure consists of three output files (academics, politicians, and biosample). The reason is that when we generate the data, I fetch the main measure separately for the three groups and so Ruihan ran the code separately for the three groups too. Now, since the information for all three groups are condensed into one file, running the code once will suffice.
   
@@ -60,7 +60,7 @@ Follow the steps below to generate the measures to be analyzed.
     | `fraction_talk_reply_neweditors` | ratio of reply to revisions by new editors at talk page |
 
 * Get the set of new editors, incumbent editors, incumbent editors who join before the shock, incumbent editors who join after the shock, editors who are new to Wikipedia
-  * code: `/code/fetch_editorset.py`
+  * code: [fetch_editorset.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/fetch_editorset.py)
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`
   * output file: `/data/all_treated_editor_set.csv`.
   
@@ -75,7 +75,7 @@ Follow the steps below to generate the measures to be analyzed.
     | `NewWikiEditorSet` | set containing new editors who are new to Wikipedia as well |
 
 * Get retention.
-  * code: `/code/fetch_retention.py`
+  * code: [fetch_retention.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/fetch_retention.py)
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv` and `/data/treated_history.csv`
   * output file: `/data/retention.csv`
     
@@ -87,7 +87,7 @@ Follow the steps below to generate the measures to be analyzed.
     | `NumCumulEditorNew`, `NumCumulEditorOld`, `NumCumulEditor` | number of new / incumbent / all editors who remain active in the focal article in the retention period |
 
 * Spillover over all Wikipedia
-  * code: `/code/get_all_wiki_rev_currentweek.py`
+  * code: [get_all_wiki_rev_currentweek.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/get_all_wiki_rev_currentweek.py)
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv`, `/data/treated_history.csv` and `/data/all_treated_main_metric_sort_by_date.csv` (**NOT** `/data/all_treated_main_metric.csv`)
   * output file: `/data/all_treated_allwikirev_currentweek.csv`. For  includes four summary statistics for various measures: sum, mean, median and mean of log-transformation. We use _ to denote these summary statistics.
   
@@ -105,7 +105,7 @@ Follow the steps below to generate the measures to be analyzed.
     _Note: For each measure, the output file contains four summary statistics (represented by `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation._
     
 * Retention over all Wikipedia
-  * code: `/code/get_all_wiki_retention.py`
+  * code: [get_all_wiki_retention.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/get_all_wiki_retention.py)
   * require `/data/all_treated_info.csv`, `/data/bot_list.csv`, `/data/treated_history.csv` and `/data/all_treated_main_metric_sort_by_date.csv` (**NOT** `/data/all_treated_main_metric.csv`)
   * output file: `/data/all_treated_allwikireten_currentweek.csv`
 
@@ -123,7 +123,7 @@ Follow the steps below to generate the measures to be analyzed.
     _Note: For each measure, the output file contains four summary statistics (represented by `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation._
 
 * Non-zero spillover over all Wikipedia
-  * code: `/code/get_spillover_nonzero.py`
+  * code: [get_spillover_nonzero.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/get_spillover_nonzero.py)
   * require `/data/main_metric_sort_by_date.csv`, `/data/history_all_wiki_sort_by_date.csv` and `/data/bot_list.csv`
   * output file: `/data/main_metric_sort_by_date_spillover_nonzero.csv`
   

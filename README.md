@@ -43,6 +43,8 @@ Follow the steps below to generate the measures to be analyzed.
     | `NumRevertingNew`, `NumRevertingOld` | number of revertings made by new / incumbent editors |
     | `NumTotalRev` | number of cumulative revisions up to the week |
 
+  * execute bash command `(head -n 1 main_metric.csv && tail -n +2 all_treated_main_metric.csv | sort -t',' -k3,3) > all_treated_main_metric_sort_by_date.csv"`. This generates a new csv file that contains exactly the same information but is sorted chronologically. This file will be used later to calculater measures all over Wikipedia.
+  
 * Talk page activity
   * code [talk_stats_analysis.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/talk_stats_analysis.py)
   * require `/data/all_treated_main_metric.csv`

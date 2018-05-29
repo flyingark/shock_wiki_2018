@@ -104,7 +104,7 @@ Follow the steps below to generate the measures to be analyzed.
     | `__PostShockAllWiki` | number of revisions by old editors who join after shock over the entire Wikipedia |
     | `__NewWikiAllWiki` | number of revisions by new editors who are also new to Wikipedia over the entire Wikipedia |
     
-    _Note: For each measure, the output file contains four summary statistics (represented by `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation._
+     _Note: For each measure, the output file contains four summary statistics (represented by `__` here):_ `Sum` _for sum,_ `Mean` _for mean,_ `Med` _for median,_ `LogMean` _for mean of log-transformation._
     
 * Retention over all Wikipedia
   * code: [get_all_wiki_retention.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/get_all_wiki_retention.py)
@@ -122,7 +122,7 @@ Follow the steps below to generate the measures to be analyzed.
     | `__NewWikiRetenAllWiki` | number of revisions by new editors who are also new to Wikipedia over the entire Wikipedia during the retention period |
     | `__NewNonWikiRetenAllWiki` | number of revisions by new editors who are not new to Wikipedia over the entire Wikipedia during the retention period |
 
-    _Note: For each measure, the output file contains four summary statistics (represented by `__` here): `Sum` for sum, `Mean` for mean, `Med` for median, `LogMean` for mean of log-transformation._
+    _Note: For each measure, the output file contains four summary statistics (represented by `__` here):_ `Sum` _for sum,_ `Mean` _for mean,_ `Med` _for median,_ `LogMean` _for mean of log-transformation._
 
 * Non-zero spillover over all Wikipedia
   * code: [get_spillover_nonzero.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/get_spillover_nonzero.py)

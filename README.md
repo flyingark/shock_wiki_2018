@@ -10,7 +10,7 @@ This project identifies and evaluates the impact of shock on the collaborative d
 The project path is `arkzhang@epico.si.umich.edu:~/shock_wiki_2018`. Unless otherwise specified, the files are under this directory.
 
 ## Identify Shock
-The raw data of shock is from Ruihan's code. To identify the shock,
+The raw data of shock is from Ruihan's code. Ruihan has provided [a fairly detailed explanation](https://github.com/dlwrh/wiki-shock-analysis), so I just briefly summarize what to do for replication. To identify the shock,
   1. Process the monthly level trends with `read_trends.py`.
   2. Process the output from 1 with `identify_shock_trends.R`.
   3. Step 2 identifies the month in which the shock takes place. Rerun Ruihan's code to fetch the shock data at the daily level.

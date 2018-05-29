@@ -11,7 +11,7 @@ The project path is `arkzhang@epico.si.umich.edu:~/shock_wiki_2018`. Unless othe
 
 ## Identify Shock
 The raw data of shock is from Ruihan's code. Ruihan has provided [a fairly detailed explanation](https://github.com/dlwrh/wiki-shock-analysis), so I just briefly summarize what to do for replication. To identify the shock,
-  1. run [suggest.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/suggest.py) and [suggestions_analysis.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/suggestions_analysis.py).
+  1. run [suggest.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/suggest.py), [suggestions_analysis.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/suggestions_analysis.py) and [get_trends.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/get_trends.py)
   2. run []
   1. Process the monthly level trends with `read_trends.py`.
   2. Process the output from 1 with `identify_shock_trends.R`.

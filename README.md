@@ -48,7 +48,7 @@ Follow the steps below to generate the measures to be analyzed.
 * Talk page activity
   * code [talk_stats_analysis.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/talk_stats_analysis.py)
   * require `/data/all_treated_main_metric.csv`
-  * output file: `/data/wiki_talk_stats_XX_final.csv`. _Note: The talk page measure consists of three output files (academics, politicians, and biosample). The reason is that when we generate the data, I fetch the main measure separately for the three groups and so Ruihan ran the code separately for the three groups too. Now, since the information for all three groups are condensed into one file, running the code once will suffice.
+  * output file: `/data/wiki_talk_stats_XX_final.csv`. _Note: The talk page measure consists of three output files (academics, politicians, and biosample). The reason is that when we generate the data, I fetch the main measure separately for the three groups and so Ruihan ran the code separately for the three groups too. Now, since the information for all three groups are condensed into one file, running the code once will suffice._
   
     | Fieldname   | Remark |
     | ----------  |---------- |

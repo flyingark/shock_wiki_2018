@@ -12,9 +12,9 @@ The project path is `arkzhang@epico.si.umich.edu:~/shock_wiki_2018`. Unless othe
 ## Identify Shock
 The raw data of shock is from Ruihan's code. Ruihan has provided [a fairly detailed explanation](https://github.com/dlwrh/wiki-shock-analysis), so I just briefly summarize what to do for replication. To identify the shock,
   1. run [suggest.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/suggest.py), [suggestions_analysis.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/suggestions_analysis.py) and [get_trends.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/get_trends.py). The output is a tsv file that records the trends
-  2. Process the monthly level trends with `read_trends.py` and `identify_shock_trends.R`.
-  2. Process the output from 1 with `identify_shock_trends.R`.
-  3. Step 2 identifies the month in which the shock takes place. Rerun Ruihan's code to fetch the shock data at the daily level.
+  2. Process the monthly level trends with [read_trends.py](https://github.com/flyingark/shock_wiki_2018/blob/master/read_trends.py) and [identify_shock_trends.R](https://github.com/flyingark/shock_wiki_2018/blob/master/identify_shock_trends.R). This will generate a new `trends_data.csv`
+  3. run [get_daily_trends.py](https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/get_daily_trends.py). This script requires `trends_data.csv` and retrieves daily-level trends.
+  4. Step 2 identifies the month in which the shock takes place. Rerun Ruihan's code to fetch the shock data at the daily level.
   4. The day on which the highest shock level is observed is the date of shock.
 
 ## Article history file
@@ -42,6 +42,22 @@ Follow the steps below to generate the measures to be analyzed.
     | `NumRevertedNew`, `NumRevertedOld` | number of revisions reverted by new / incumbent editors |
     | `NumRevertingNew`, `NumRevertingOld` | number of revertings made by new / incumbent editors |
     | `NumTotalRev` | number of cumulative revisions up to the week |
+
+* Talk page activity
+  * code `talk_stats_analysis.py`(https://github.com/dlwrh/wiki-shock-analysis/blob/master/code/talk_stats_analysis.py)
+  * require `/data/all_treated_main_metric.csv`
+  * output file: `/data/wiki_talk_stats_XX_final.csv`. _Note: The talk page measure consists of three output files (academics, politicians, and biosample). The reason is that when we generate the data, I fetch the main measure separately for the three groups and so Ruihan ran the code separately for the three groups too. Now, since the information for all three groups are condensed into one file, running the code once will suffice.
+  
+    | Fieldname   | Remark |
+    | ----------  |---------- |
+    | `ArticleId` | id of article |
+    | `RelWeek`   | week relative to the time of shock |
+    | `#total_comment` | total number of revisions to talk pages |
+    | `#editis_per_neweditor` | average number of revisions to talk page by new editors |
+    | `#neweditors` | number of new editors |
+    | `#neweditors_comment` | number of revisions to talk pages by new editors |
+    | `#reply_neweditors` | number of replies to new editors on talk page |
+    | `fraction_talk_reply_neweditors` | ratio of reply to revisions by new editors at talk page |
 
 * Get the set of new editors, incumbent editors, incumbent editors who join before the shock, incumbent editors who join after the shock, editors who are new to Wikipedia
   * code: `/code/fetch_editorset.py`

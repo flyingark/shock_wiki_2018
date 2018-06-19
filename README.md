@@ -142,3 +142,6 @@ Follow the steps below to generate the measures to be analyzed.
 ## Analysis
 Run [Analysis.Rmd](https://github.com/flyingark/shock_wiki_2018/blob/master/Analysis.Rmd). The [markdown file with output](https://github.com/flyingark/shock_wiki_2018/blob/master/Analysis_with_output.pdf) is also attached.
 _Note: The path in the r markdown is set as the local directory on my machine. It needs to be updated when performing replication.__
+
+## Mediation analysis
+Run [mediation.do](https://github.com/flyingark/shock_wiki_2018/blob/master/mediation.do). This is a stata do file and uses sem function.
